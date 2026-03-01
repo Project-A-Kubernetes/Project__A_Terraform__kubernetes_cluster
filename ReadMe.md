@@ -117,3 +117,27 @@ This ensures:
 - State consistency
 - Team-safe collaboration
 - Protection against concurrent applies
+
+## ⚙️ Deployment Workflow
+#### NOTE: you must have terraform installed in your terminal 
+#### Apply each in different state directory 
+1️⃣ Initialize Terraform
+```hcl
+terraform init
+```
+
+2️⃣ Validate Configuration 
+```hcl
+terraform validate
+terraform fmt -check
+```
+
+3️⃣ Plan Infrastructure
+```hcl 
+terraform plan -out=tfplan 
+```
+
+4️⃣ Apply Changes
+```hcl 
+terraform apply tfplan
+``` 
