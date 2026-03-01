@@ -5,7 +5,7 @@
 This repository contains a modular, production-ready Infrastructure as Code (IaC) implementation for provisioning a secure and scalable Amazon EKS Kubernetes cluster on AWS using Terraform. 
 
 
-## architecture diagram
+## Architecture Diagram
 ![Architecture Diagram](diagram/infra.png)
 
 
@@ -70,3 +70,48 @@ Project_A_Terraform/
 │
 └── remote-state/               # Remote state backend configs (S3/DynamoDB)
 
+
+## Design Philosophy
+
+- modules/ contains reusable infrastructure components
+- environments/ contains environment-specific instantiations
+- Separation of networking and cluster layers
+- reducing infrastructure blast reduis
+- Remote state is consumed using terraform_remote_state data sources 
+
+
+## 🔐 Security Best Practices Implemented
+
+- IAM roles follow least privilege principle
+- No hardcoded credentials
+- EKS uses OIDC provider for IRSA
+- Eks, Worker nodes, database are placed in private subnets
+- API server access controlled via security groups
+- Remote state stored securely in S3
+- DynamoDB used for state locking
+- Security group rules explicitly defined (no overly permissive rules)
+- best standard practice used  
+
+
+## 🌍 Remote State Backend
+Terraform state is stored in:
+
+- S3 bucket (versioning enabled)
+- S3 bucket encrypted
+- DynamoDB table for state locking
+
+###  Example backend configuration:
+terraform {
+  backend "s3" {
+    bucket         = "your-terraform-state-bucket"
+    key            = "prod/eks/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-lock-table"
+    encrypt        = true
+  }
+}
+
+This ensures:
+- State consistency
+- Team-safe collaboration
+- Protection against concurrent applies
