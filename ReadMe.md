@@ -38,6 +38,7 @@ Core Infrastructure Components
     - EKS add-ons
     - IRSA (OIDC-based service account roles)
 - OIDC provider integration
+- VPN for secure access and control
 - ECR integration (for container workloads)
 - Optional: EBS CSI driver IAM role configuration
 
@@ -67,6 +68,7 @@ Project_A_Terraform/
 │   ├── RDS/
 │   ├── IAM/
 │   ├── Argocd/
+|   |__ Observability/
 │   └── encryption-secrets/
 │
 └── remote-state/               # Remote state backend configs (S3/DynamoDB)
