@@ -43,6 +43,7 @@ Core Infrastructure Components
 
 
 ## 📂 Repository Structure
+```structure
 Project_A_Terraform/
 │
 ├── README.md
@@ -69,7 +70,7 @@ Project_A_Terraform/
 │   └── encryption-secrets/
 │
 └── remote-state/               # Remote state backend configs (S3/DynamoDB)
-
+```
 
 ## Design Philosophy
 
@@ -101,6 +102,7 @@ Terraform state is stored in:
 - DynamoDB table for state locking
 
 ###  Example backend configuration:
+```hcl
 terraform {
   backend "s3" {
     bucket         = "your-terraform-state-bucket"
@@ -110,7 +112,7 @@ terraform {
     encrypt        = true
   }
 }
-
+```
 This ensures:
 - State consistency
 - Team-safe collaboration
