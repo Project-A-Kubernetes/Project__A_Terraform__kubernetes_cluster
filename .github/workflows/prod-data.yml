@@ -1,0 +1,21 @@
+name: terraform-vpn
+on: 
+  push:
+    branches:
+      - main  
+    paths:
+      - 'environment/prod/database/**' 
+  pull_request:
+    paths:
+      - 'environment/prod/database/**'
+  workflow_dispatch:  
+permissions:
+  contents: read 
+  id-token: write
+jobs:
+  terraform-deploy:
+    uses: ./.github/workflows/terraform-reusable.yml 
+    with: 
+      working_directory: environment/prod/database 
+      environment: production 
+    secrets: inherit 

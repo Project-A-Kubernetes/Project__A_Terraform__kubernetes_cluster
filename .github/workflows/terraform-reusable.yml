@@ -1,0 +1,111 @@
+name: terraform_reuseable
+on: 
+  workflow_call: 
+    inputs:
+      working_directory:
+        required: true 
+        type: string 
+      environment:
+        required: true
+        type: string
+ 
+permissions:
+  id-token: write
+  contents: read
+concurrency: 
+  group: ${{ github.workflow }}-${{ inputs.working_directory }}
+  cancel-in-progress: true 
+jobs:
+  terraform-plan: 
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{inputs.working_directory}}
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+      - name: aws login 
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{secrets.AWS_ROLE}}
+          aws-region: ${{secrets.AWS_REGION}}
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.12.0
+      - name: setup python env 
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: terraform init 
+        run: |
+          terraform init -upgrade -input=false 
+      - name: terraform fmt -check -recursive 
+        run: |
+          terraform fmt -recursive
+      - name: terraform validate 
+        run: |
+          terraform validate -no-color 
+      - name: terraform lint 
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          tflint --format=json > tflint.json || true 
+        
+      - name: terraform security checks 
+        uses: aquasecurity/tfsec-action@v1.0.3
+        with:
+          working_directory: ${{inputs.working_directory}}
+          soft_fail: false
+          additional_args: "--minimum-severity CRITICAL --format json --out tfsec.json"
+      - name: run checkov on terraform
+        run: | 
+          pip install checkov
+          checkov -d . -o json > checkov-report.json || true 
+      - name: terraform plan 
+        id: terraform_plan 
+        run: |
+          terraform plan -out=tfplan -input=false -no-color
+      - name: send tfplan
+        uses: actions/upload-artifact@v4
+        with: 
+          path: ${{inputs.working_directory}}/tfplan 
+          name: tfplan
+  terraform-apply:
+    runs-on: ubuntu-latest
+    needs: terraform-plan
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    defaults:
+      run:
+        working-directory: ${{inputs.working_directory}}
+    # environment: 
+    #   name: ${{inputs.environment}}
+    steps:
+      - name: check out repo 
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: aws login 
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{secrets.AWS_ROLE}}
+          aws-region: ${{secrets.AWS_REGION}}
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.12.0
+      - name: terraform init 
+        run: terraform init -no-color 
+      - name: download plan artifact 
+        uses: actions/download-artifact@v4 
+        with:
+          name: tfplan 
+          path: ${{inputs.working_directory}}
+      - name: terraform apply 
+        run: |
+          terraform apply --auto-approve tfplan 
+          terraform destroy --auto-approve #remove when the infrastructure is ready to launch
+      - name: print 
+        run: echo "successful deployed"
+

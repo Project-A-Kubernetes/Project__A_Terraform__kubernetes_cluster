@@ -1,0 +1,21 @@
+name: terraform-EKS
+on: 
+  push:
+    branches:
+      - main  
+    paths:
+      - 'environment/prod/EKS/**' 
+  pull_request:
+    paths:
+      - 'environment/prod/EKS/**'
+  workflow_dispatch:  
+permissions:
+  contents: read 
+  id-token: write
+jobs:
+  terraform-deploy:
+    uses: ./.github/workflows/terraform-reusable.yml 
+    with: 
+      working_directory: environment/prod/EKS 
+      environment: production 
+    secrets: inherit 

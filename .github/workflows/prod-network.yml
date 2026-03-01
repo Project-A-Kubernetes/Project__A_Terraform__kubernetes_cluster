@@ -1,0 +1,21 @@
+name: terraform-network
+on: 
+  push:
+    branches:
+      - main  
+    paths:
+      - 'environment/prod/network/**' 
+  pull_request:
+    paths:
+      - 'environment/prod/network/**'
+  workflow_dispatch:  
+permissions:
+  contents: read 
+  id-token: write
+jobs:
+  terraform-deploy:
+    uses: ./.github/workflows/terraform-reusable.yml 
+    with: 
+      working_directory: environment/prod/network 
+      environment: production 
+    secrets: inherit 
