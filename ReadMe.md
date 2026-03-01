@@ -119,8 +119,9 @@ This ensures:
 - Protection against concurrent applies
 
 ## ⚙️ Deployment Workflow
-#### NOTE: you must have terraform installed in your terminal 
-#### Apply each in different state directory 
+> **Note:** Terraform must be installed on your local machine.  
+> Apply each environment/layer in its own state directory.  
+> **Important:** When testing the CI/CD pipeline, ensure you trigger resources in the correct dependency order—network → VPN → EKS → database → addons—because resources like the cluster, database, and VPN depend on other remote state outputs. Trigger each layer accordingly.
 1️⃣ Initialize Terraform
 ```hcl
 terraform init
