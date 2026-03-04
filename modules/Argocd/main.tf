@@ -8,4 +8,8 @@ resource "helm_release" "argocd" {
   version          = "7.7.16"
 
 
+  set {
+    name  = "server.service.type"
+    value = "ClusterIP"
+  }
 }
