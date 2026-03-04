@@ -176,3 +176,18 @@ resource "aws_eks_addon" "this" {
   resolve_conflicts_on_create = "OVERWRITE"
   service_account_role_arn = var.ebs-csi-role 
 }
+
+resource "aws_eks_access_entry" "felix_user" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  principal_arn = "arn:aws:iam::430695042840:user/Rabonose"
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "felix_admin" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  principal_arn = "arn:aws:iam::430695042840:user/Rabonose"
+  policy_arn    = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  access_scope {
+    type = "cluster"
+  }
+}
