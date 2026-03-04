@@ -5,8 +5,8 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = var.cluster-role
   vpc_config {
     subnet_ids              = var.cluster-subnet
-    endpoint_private_access = true # we vant private network access access only so the cluster is not expose at any point
-    endpoint_public_access  = false
+    endpoint_private_access = false #i will change to true later and activate my vpn # we vant private network access access only so the cluster is not expose at any point
+    endpoint_public_access  = true
     security_group_ids = [ aws_security_group.cluster.id ]
   }
   #we apply KMS encryption to our eks etcd
@@ -65,13 +65,13 @@ data "tls_certificate" "tls" {
 #control plane sg 
 resource "aws_security_group" "cluster" {
   vpc_id = var.sg-vpc
-  ingress {
-    from_port = 443 
-    to_port = 443
-    protocol = "tcp"
-    description = "This give the vpn access to my api server as api server is the only cluster access point"
-    security_groups = [ var.vpn-sg ]
-  }
+  # ingress {
+  #   from_port = 443 
+  #   to_port = 443
+  #   protocol = "tcp"
+  #   description = "This give the vpn access to my api server as api server is the only cluster access point"
+  #   security_groups = [ var.vpn-sg ]
+  # }
   ingress {
     from_port = 443 
     to_port = 443 
@@ -96,7 +96,7 @@ resource "aws_eks_node_group" "workernode" {
   node_group_name = var.workernode-name
   node_role_arn   = var.workernode-role
   subnet_ids      = var.workernode-subnet
-  instance_types  = ["t3.small"]
+  instance_types  = ["c7i-flex.large"]
   #disk_size = var.disk-size can be added to cluster but i use the default size of 20GB
   #we can config a security-group,minimux launch template for the node_group but we will let aws do that
   scaling_config {

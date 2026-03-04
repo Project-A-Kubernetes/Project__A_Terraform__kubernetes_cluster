@@ -20,7 +20,7 @@ module "EKS" {
   sg-vpc                       = data.terraform_remote_state.network.outputs.vpc_id
   ebs-csi-role = module.IAM.ebs-csi-role-arn
   worker-cidr-blocks = data.terraform_remote_state.network.outputs.vpc_cidr
-  vpn-sg =  data.terraform_remote_state.access-vpn.outputs.vpn_sg 
+  #vpn-sg =  data.terraform_remote_state.access-vpn.outputs.vpn_sg 
 } 
 module "encryption" {
   source = "../../../modules/encryption-secrets/eksencrypt"  

@@ -1,5 +1,5 @@
 #===========
-#This is a testing pod for my cluster 
+#This is a testing pod for my cluster for checking the connect between pods and rds database
 #===============
 
 apiVersion: apps/v1
