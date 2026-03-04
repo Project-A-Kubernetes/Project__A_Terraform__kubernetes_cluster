@@ -1,0 +1,21 @@
+name: terraform-platform
+on: 
+  push:
+    branches:
+      - main  
+    paths:
+      - 'environment/prod/platform/**' 
+  pull_request:
+    paths:
+      - 'environment/prod/platform/**'
+  workflow_dispatch:  
+permissions:
+  contents: read 
+  id-token: write
+jobs:
+  terraform-deploy:
+    uses: ./.github/workflows/terraform-reusable.yml 
+    with: 
+      working_directory: environment/prod/platform 
+      environment: production 
+    secrets: inherit 
