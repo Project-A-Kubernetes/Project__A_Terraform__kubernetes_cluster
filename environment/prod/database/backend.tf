@@ -1,7 +1,7 @@
 data "terraform_remote_state" "network" {
   backend = "s3"
   config = {
-    bucket = "project-a-kubernetes-state"
+    bucket = "felix-terraform-kubernetes-state"
     key    = "prod/network/terraform-state.tfstate"
     region = "us-east-1"
     encrypt = true
@@ -10,7 +10,7 @@ data "terraform_remote_state" "network" {
 data "terraform_remote_state" "EKS" {
   backend = "s3"
   config = {
-    bucket = "project-a-kubernetes-state"
+    bucket = "felix-terraform-kubernetes-state"
     key = "prod/EKS/terraform-state.tfstate"
     encrypt = true 
     region = "us-east-1"
@@ -18,7 +18,7 @@ data "terraform_remote_state" "EKS" {
 }
 terraform {
   backend "s3" {
-    bucket = "project-a-kubernetes-state"
+    bucket = "felix-terraform-kubernetes-state"
     key = "prod/Database/terraform-state.tfstate"
     encrypt = true 
     region = "us-east-1"

@@ -1,5 +1,5 @@
 locals {
-  bucketName   = "project-a-kubernetes-state"
+  bucketName   = "felix-terraform-kubernetes-state"
   dynamodbName = "project-a-kubernetes-state-locking"
 }
 
@@ -7,7 +7,7 @@ locals {
 resource "aws_s3_bucket" "state-bucket" {
   bucket = local.bucketName
   lifecycle {
-    prevent_destroy = true #we do this so the bucket is not mistakely deleted 
+    prevent_destroy = false #we do this so the bucket is not mistakely deleted but turn it true on your terms
   }
   tags = {
     environemnt = var.env
