@@ -8,4 +8,4 @@ module "VPC" {
   cidr             = "10.0.0.0/16"
   env              = "production"
   vpc-cluster-name = local.cluster_name
-} #network
+} 
