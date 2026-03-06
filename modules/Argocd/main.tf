@@ -13,3 +13,5 @@ resource "helm_release" "argocd" {
     value = "ClusterIP"
   }
 }
+
+
