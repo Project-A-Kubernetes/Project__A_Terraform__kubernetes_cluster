@@ -176,7 +176,7 @@ resource "aws_eks_addon" "this" {
   resolve_conflicts_on_create = "OVERWRITE"
   service_account_role_arn = var.ebs-csi-role 
 }
-
+#creating a cluster admin access to my cluster 
 resource "aws_eks_access_entry" "felix_user" {
   cluster_name  = aws_eks_cluster.cluster.name
   principal_arn = "arn:aws:iam::430695042840:user/Rabonose"
