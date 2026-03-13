@@ -9,4 +9,3 @@ module "VPC" {
   env              = "production"
   vpc-cluster-name = local.cluster_name
 } 
-# network
