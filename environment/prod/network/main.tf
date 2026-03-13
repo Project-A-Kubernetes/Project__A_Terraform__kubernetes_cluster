@@ -1,4 +1,4 @@
-#this local cluster name will be properly configured later
+
 locals {
   cluster_name = "felix-aws-cluster"
 }
