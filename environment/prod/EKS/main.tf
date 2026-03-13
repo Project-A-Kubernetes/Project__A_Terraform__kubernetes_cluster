@@ -36,4 +36,3 @@ module "IAM" {
   oidc-role       = "kube-SA-OIDC"
   oidc-url        = module.EKS.OIDC
 }
-#eks cluster
