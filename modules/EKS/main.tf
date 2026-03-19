@@ -5,8 +5,8 @@ resource "aws_eks_cluster" "cluster" {
   role_arn = var.cluster-role
   vpc_config {
     subnet_ids              = var.cluster-subnet
-    endpoint_private_access = false #i will change to true later and activate my vpn # we vant private network access access only so the cluster is not expose at any point
-    endpoint_public_access  = true
+    endpoint_private_access = true # we will access the cluster with our vpn sg to sg in a vpc
+    endpoint_public_access  = false
     security_group_ids = [ aws_security_group.cluster.id ]
   }
   #we apply KMS encryption to our eks etcd
