@@ -145,7 +145,7 @@ jobs:
 * IAM roles follow **least privilege principle**
 * **IRSA (OIDC)** for secure pod-level AWS access
 * All critical resources (**EKS, RDS, nodes**) deployed in private subnets
-* No hardcoded credentials — secrets managed securely
+* No hardcoded credentials and secrets managed securely
 * API server access restricted via security controls
 * Encrypted S3 backend for Terraform state
 * DynamoDB used for **state locking and concurrency control**
@@ -162,12 +162,13 @@ Terraform state is securely managed using:
 
 ```hcl
 terraform {
+  #my remote state backend for my network
   backend "s3" {
-    bucket         = "your-terraform-state-bucket"
-    key            = "prod/eks/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-lock-table"
+    bucket         = "felix-terraform-kubernetes-state"
+    dynamodb_table = "project-a-kubernetes-state-locking"
+    key            = "prod/network/terraform-state.tfstate"
     encrypt        = true
+    region         = "us-east-1"
   }
 }
 ```
@@ -221,7 +222,7 @@ This infrastructure is designed to handle real-world failure cases:
 Infrastructure is deployed in **layered order**:
 
 ```
-Network -> EKS -> Platform → Database → VPC -> Add-ons ...
+Network -> EKS -> Platform → Database → VPN -> Add-ons ...
 ```
 
 ```bash
