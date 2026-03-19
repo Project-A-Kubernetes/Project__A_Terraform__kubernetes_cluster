@@ -8,7 +8,7 @@ The infrastructure is designed using **modular architecture, environment isolati
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ![Architecture Diagram](diagram/infra.png)
 
