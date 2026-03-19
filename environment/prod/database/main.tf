@@ -23,4 +23,3 @@ module "encryption" {
   source = "../../../modules/encryption-secrets/rdsencrypt" 
   env = "production"
 }
-#database
