@@ -105,7 +105,7 @@ jobs:
       - name: terraform apply 
         run: |
           terraform apply --auto-approve tfplan 
-          terraform destroy --auto-approve #remove when the infrastructure is ready to launch
+         # terraform destroy --auto-approve #remove when the infrastructure is ready to launch
       - name: print 
         run: echo "successful deployed"
 
