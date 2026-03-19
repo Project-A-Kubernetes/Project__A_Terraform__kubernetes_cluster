@@ -65,13 +65,13 @@ data "tls_certificate" "tls" {
 #control plane sg 
 resource "aws_security_group" "cluster" {
   vpc_id = var.sg-vpc
-  # ingress {
-  #   from_port = 443 
-  #   to_port = 443
-  #   protocol = "tcp"
-  #   description = "This give the vpn access to my api server as api server is the only cluster access point"
-  #   security_groups = [ var.vpn-sg ]
-  # }
+  ingress {
+    from_port = 443 
+    to_port = 443
+    protocol = "tcp"
+    description = "This give the vpn access to my api server as api server is the only cluster access point"
+    security_groups = [ var.vpn-sg ]
+  }
   ingress {
     from_port = 443 
     to_port = 443 

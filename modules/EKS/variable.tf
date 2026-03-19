@@ -60,7 +60,7 @@ variable "ebs-csi-role" {
   type = string 
   description = "The csin driver role"
 }
-# variable "vpn-sg" {
-#   type = string 
-#   description = "This is where the vpn sg id come into our controll plane sg for private and secure access"
-# }
+variable "vpn-sg" {
+  type = string 
+  description = "This is where the vpn sg id come into our controll plane sg for private and secure access"
+}
