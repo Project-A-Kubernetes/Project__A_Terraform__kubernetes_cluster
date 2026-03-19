@@ -1,6 +1,6 @@
 # Project A – AWS EKS Infrastructure (Terraform)
 
-## 📌 Overview
+##  Overview
 
 This repository contains a **production-grade Infrastructure as Code (IaC) implementation** for provisioning a secure, scalable, and highly available Kubernetes platform on AWS using Terraform.
 
@@ -26,7 +26,7 @@ The infrastructure is designed using **modular architecture, environment isolati
 
 ---
 
-## ⚙️ Core Infrastructure Components
+## Core Infrastructure Components
 
 ### Networking
 
@@ -97,7 +97,7 @@ Project_A_Terraform/
 
 ---
 
-## 🔄 CI/CD – GitHub Actions (Reusable Workflow)
+##  CI/CD – GitHub Actions (Reusable Workflow)
 
 Infrastructure deployment is automated using **GitHub Actions with reusable workflows**, enabling consistent and controlled Terraform operations across environments.
 
@@ -185,7 +185,7 @@ terraform {
 
 ---
 
-## 🚨 Failure Scenarios & Resilience
+## Failure Scenarios & Resilience
 
 This infrastructure is designed to handle real-world failure cases:
 
@@ -216,7 +216,7 @@ This infrastructure is designed to handle real-world failure cases:
 
 ---
 
-## 🔄 Deployment Workflow
+##  Deployment Workflow
 
 Infrastructure is deployed in **layered order**:
 
@@ -234,7 +234,7 @@ terraform apply tfplan
 
 ---
 
-## 🚀 Production Capabilities
+##  Production Capabilities
 
 * Highly available Kubernetes workloads (multi-AZ)
 * Secure backend services with private database access
@@ -244,7 +244,7 @@ terraform apply tfplan
 
 ---
 
-## 💡 Key Engineering Decisions
+##  Key Engineering Decisions
 
 * **Private-first architecture** → reduces attack surface
 * **IRSA over static credentials** → secure AWS access
@@ -253,7 +253,7 @@ terraform apply tfplan
 
 ---
 
-## 📌 Summary
+##  Summary
 
 This project demonstrates a **real-world, production-grade cloud infrastructure** built with Terraform, focusing on:
 
