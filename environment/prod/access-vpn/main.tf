@@ -12,4 +12,3 @@ module "VPN" {
   client-cidr-block  = "10.200.0.0/22"
   vpn-client = ["felix-john-devops"]
 }
-#VPN
