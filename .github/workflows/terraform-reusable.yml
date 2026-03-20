@@ -66,10 +66,6 @@ jobs:
       - name: terraform plan 
         id: terraform_plan 
         run: |
-          
-          rm -rf .terraform
-          rm -f .terraform.lock.hcl
-          rm -f terraform.tfstate*
           terraform plan -out=tfplan -input=false -no-color
       - name: send tfplan
         uses: actions/upload-artifact@v4
@@ -110,7 +106,6 @@ jobs:
       - name: terraform apply 
         run: |
           terraform apply --auto-approve tfplan 
-          terraform destroy --auto-approve #remove when the infrastructure is ready to launch
       - name: print 
         run: echo "successful deployed"
 

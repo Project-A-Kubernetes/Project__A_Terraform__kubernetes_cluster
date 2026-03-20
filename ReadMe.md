@@ -235,6 +235,10 @@ terraform apply tfplan
 
 ---
 
+[🎥 Watch Project Demo](https://felix-aw-demo-video-cluster.s3.us-east-1.amazonaws.com/ScreenRecording_03-20-2026_3-35-34_AM_1.mov)
+ 
+ ---
+ 
 ##  Production Capabilities
 
 * Highly available Kubernetes workloads (multi-AZ)
