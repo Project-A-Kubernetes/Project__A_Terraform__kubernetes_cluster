@@ -67,6 +67,11 @@ jobs:
         id: terraform_plan 
         run: |
           terraform refresh
+          terraform state list
+          terraform state rm aws_ec2_client_vpn_endpoint.vpn
+          terraform state rm aws_ec2_client_vpn_network_association.assoc
+          terraform state rm aws_acm_pca_certificate_authority.ca
+          terraform state rm aws_acm_pca_certificate.cert
           terraform plan -out=tfplan -input=false -no-color
       - name: send tfplan
         uses: actions/upload-artifact@v4
@@ -110,4 +115,5 @@ jobs:
           terraform destroy --auto-approve #remove when the infrastructure is ready to launch
       - name: print 
         run: echo "successful deployed"
+
 
